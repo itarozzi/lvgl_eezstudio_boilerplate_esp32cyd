@@ -1,7 +1,16 @@
-ESP32-CYD LVGL EEZ Studio Boilerplate
+LVGL EEZ Studio Boilerplate for ESP32-CYD 
 =========================================
 
 
+
+## Usage:
+
+- Open project with platformio (it will install all required libs under .pio/ directory). 
+- Copy `lv_conf.h` from `custom_files` directory to `.pio/libdeps/esp32dev/`
+- Copy `User_Setup.h` from `custom_files` directory to `.pio/libdeps/esp32dev/TFT_eSPI/`
+
+- Build and upload using platformio commands
+  
 ## Hardware:
 
 ESP32-CYD - TFT Panel with touchscreen 
