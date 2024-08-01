@@ -177,7 +177,7 @@ void setup() {
 
 void loop() {
 
-  static long last_ms = millis();
+  static long last_ms = 0;
 
   long now_ms = millis();
 
@@ -185,7 +185,9 @@ void loop() {
 
 
   lv_task_handler();  // let the GUI do its work
-  lv_tick_inc(now_ms - last_ms);     // tell LVGL how much time has passed
+
+  //lv_tick_inc(now_ms - last_ms);     // tell LVGL how much time has passed
+  lv_tick_inc(5);
 
   last_ms = now_ms;
   delay(5);           // let this time pass
