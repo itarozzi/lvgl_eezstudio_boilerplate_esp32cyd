@@ -8,6 +8,10 @@ This boilerplate project is based on a very cheap ESP32-CYD Hardware (ESP32 with
 
 But you can easily adapt to other esp32 board and display/touch changing PIN definition, `lv_conf.h and` and  `User_Setup.h` files.
 
+
+[EEZ-Studio](https://github.com/eez-open/studio) is used here to create LVGL interfaces using a great visual tool.
+
+
 ## Usage:
 
 - Clone this repo and rename to application name.
@@ -23,7 +27,9 @@ But you can easily adapt to other esp32 board and display/touch changing PIN def
 
 ## Using and integrating EEZ-Studio:
 
-T.b.d.
+LVGL C files are generate by EEZ-Studio under `src/ui/` directory.
+
+T.b.c.
 
 
 ## ESP32 Manual programming
