@@ -120,7 +120,7 @@ void lv_init_esp32(void) {
   
   touchscreen.begin(touchscreenSPI);
   // Set the Touchscreen rotation in portrait mode
-  touchscreen.setRotation(2);  // 3 horizontal
+  touchscreen.setRotation(3);  // 2:vertical / 3:horizontal
 
   // Create a display object
   lv_display_t * disp;
