@@ -42,3 +42,6 @@ esptool.py --chip esp32 --port "/dev/ttyUSB0" --baud 460800 --before default_res
 - add tips on how to use eez-studio with LVGL
 - looking for a way to use `lv_conf.h` and `User_Setup.h` without copy them in `.pio` subdir
 - adapt the boilerplate for Raspberry Pi Pico (RP2040) too
+- adapt the boilerplate for using LVGL PC simulation (?)
+- study EEZ-Studio Flows 
+
