@@ -102,6 +102,8 @@ void touchscreen_read(lv_indev_t * indev, lv_indev_data_t * data) {
     // Set the coordinates
     data->point.x = x;
     data->point.y = y;
+    String touch_data = "X = " + String(x) + "  Y = " + String(y) + "  Z = " + String(z);
+    Serial.println(touch_data);
   }
   else {
     data->state = LV_INDEV_STATE_RELEASED;
@@ -120,7 +122,7 @@ void lv_init_esp32(void) {
   
   touchscreen.begin(touchscreenSPI);
   // Set the Touchscreen rotation in portrait mode
-  touchscreen.setRotation(2);  // 3 horizontal
+  touchscreen.setRotation(3);  // 3 horizontal
 
   // Create a display object
   lv_display_t * disp;
@@ -183,12 +185,13 @@ void loop() {
 
   // your task here on in callbacks
 
+  // enable this if use EEZ Studio Flows 
+  ui_tick();
 
   lv_task_handler();  // let the GUI do its work
 
-  //lv_tick_inc(now_ms - last_ms);     // tell LVGL how much time has passed
-  lv_tick_inc(5);
-
+  lv_tick_inc(now_ms - last_ms);     // tell LVGL how much time has passed
+  
   last_ms = now_ms;
   delay(5);           // let this time pass
 
