@@ -1,11 +1,15 @@
 #ifndef EEZ_LVGL_UI_STRUCTS_H
 #define EEZ_LVGL_UI_STRUCTS_H
 
-#include "eez-flow.h"
+#if !defined(EEZ_FOR_LVGL)
+#warning "EEZ_FOR_LVGL is not enabled"
+#define EEZ_FOR_LVGL
+#endif
 
 
 #if defined(EEZ_FOR_LVGL)
 
+#include <eez/flow/flow.h>
 #include <stdint.h>
 #include <stdbool.h>
 

@@ -1,11 +1,21 @@
 #ifndef EEZ_LVGL_UI_GUI_H
 #define EEZ_LVGL_UI_GUI_H
 
+
+
 #include <lvgl.h>
 
-#include "eez-flow.h"
+#if !defined(EEZ_FOR_LVGL)
+#warning "EEZ_FOR_LVGL is not enabled"
+#define EEZ_FOR_LVGL
+#endif
 
 
+
+
+#if defined(EEZ_FOR_LVGL)
+#include <eez/flow/lvgl_api.h>
+#endif
 
 #if !defined(EEZ_FOR_LVGL)
 #include "screens.h"
@@ -15,7 +25,7 @@
 extern "C" {
 #endif
 
-extern const uint8_t assets[1652];
+extern const uint8_t assets[2148];
 
 void ui_init();
 void ui_tick();
