@@ -15,10 +15,8 @@ But you can easily adapt to other esp32 board and display/touch changing PIN def
 ## Usage:
 
 - Clone this repo and rename to application name.
+- Open project with EEZ-Studio and build to generate ui files
 - Open project with platformio (it will install all required libs under .pio/ directory). 
-- Copy `lv_conf.h` from `custom_files` directory to `.pio/libdeps/esp32dev/`
-- Copy `User_Setup.h` from `custom_files` directory to `.pio/libdeps/esp32dev/TFT_eSPI/`
-
 - Build and upload using platformio commands as usual
   
 > Since the TFT_eSPI and LVGL libraries are based on HW specific configuration files, I include that files for ESP32-CYD board in `custom_files` directory. So you need to copy them in the relevant directories.
