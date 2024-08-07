@@ -23,11 +23,16 @@
 #define RXPIN 27
 #define TXPIN 22
 
+// CYD RGB LED Pins
+#define CYD_LED_RED 4
+#define CYD_LED_GREEN 16
+#define CYD_LED_BLUE 17
 
 
 //************* lvgl and UI includes  *************
 #include <lvgl.h>
 #include "ui/ui.h"
+#include "ui/vars.h"
 //#include "ui/actions.h"
 //#include "ui/images.h"
 
@@ -75,8 +80,21 @@ TFT_eSPI tft = TFT_eSPI();
 // }
 
 
+// ** Define your vars getter and setter here, if native variables are used in your project **
 
-
+// bool is_led_active = false;
+//
+// bool get_var_led_active()
+// {
+//   return is_led_active;
+// }
+//
+// void set_var_led_active(bool value) {
+//   is_led_active = value;
+//
+//   // Cheap Yellow Display built-in RGB LED is controlled with inverted logic
+//   digitalWrite(CYD_LED_BLUE, value ? LOW : HIGH);
+// }
 
 
 // If logging is enabled, it will inform the user about what is happening in the library
@@ -102,6 +120,8 @@ void touchscreen_read(lv_indev_t * indev, lv_indev_data_t * data) {
     // Set the coordinates
     data->point.x = x;
     data->point.y = y;
+    // String touch_data = "X = " + String(x) + "  Y = " + String(y) + "  Z = " + String(z);
+    // Serial.println(touch_data);
   }
   else {
     data->state = LV_INDEV_STATE_RELEASED;
@@ -156,6 +176,16 @@ void setup() {
   Serial.println(SW_NAME_REV);
   Serial.println(LVGL_Arduino);
 
+  pinMode(CYD_LED_RED, OUTPUT);
+  pinMode(CYD_LED_GREEN, OUTPUT);
+  pinMode(CYD_LED_BLUE, OUTPUT);
+
+  digitalWrite(CYD_LED_BLUE, HIGH);
+  digitalWrite(CYD_LED_GREEN, HIGH);
+  digitalWrite(CYD_LED_RED, HIGH);
+
+  
+
 
 /*
   tft.init();
@@ -177,11 +207,12 @@ void setup() {
 
 void loop() {
 
-  static long last_ms = millis();
+  static long last_ms = 0;
 
   long now_ms = millis();
 
-  // your task here on in callbacks
+  // your task here or in callbacks
+  // ...
 
 
   lv_task_handler();  // let the GUI do its work
