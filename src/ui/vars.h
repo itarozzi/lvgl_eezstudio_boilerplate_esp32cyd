@@ -15,12 +15,15 @@ extern "C" {
 // Flow global variables
 
 enum FlowGlobalVariables {
-    FLOW_GLOBAL_VARIABLE_COUNTER = 0,
-    FLOW_GLOBAL_VARIABLE_LED_ACTIVE = 1
+    FLOW_GLOBAL_VARIABLE_COUNTER = 0
 };
 
 // Native global variables
 
+extern bool get_var_led_active();
+extern void set_var_led_active(bool value);
+extern int32_t get_var_temperature();
+extern void set_var_temperature(int32_t value);
 
 
 #ifdef __cplusplus

@@ -15,19 +15,34 @@
   - "lvgl" library by LVGL - https://github.com/lvgl/lvgl
 */
 
+
+
+//*** used for BME280 sensor */
+#include <Wire.h>
 #include <Arduino.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BME280.h>
+#define I2C_SDA 27
+#define I2C_SCL 22
+TwoWire I2CBME = TwoWire(0);
+Adafruit_BME280 bme;
+
 
 #define SW_NAME_REV "MyApp v1.0"
 
-//************* software serial pins used for debug (if serial0 is used for communication) *************
+//*** software serial pins used for debug (if serial0 is used for communication) ***
 #define RXPIN 27
 #define TXPIN 22
 
+// RGB LED Pins
+#define CYD_LED_RED 4
+#define CYD_LED_GREEN 16
+#define CYD_LED_BLUE 17
 
-
-//************* lvgl and UI includes  *************
+//*** lvgl and UI includes  ***
 #include <lvgl.h>
 #include "ui/ui.h"
+#include "ui/vars.h"
 //#include "ui/actions.h"
 //#include "ui/images.h"
 
@@ -76,6 +91,27 @@ TFT_eSPI tft = TFT_eSPI();
 
 
 
+float bme_temp;
+
+// ** Define your vars getter and setter here **
+int32_t get_var_temperature(){return (int32_t)bme_temp;}
+void set_var_temperature(int32_t value) {};
+
+bool is_led_active = false;
+bool get_var_led_active()
+{
+  return is_led_active;
+}
+
+void set_var_led_active(bool value) {
+  // Set LED value
+  is_led_active = value;
+
+  // Cheap Yellow Display built-in RGB LED is controlled with inverted logic
+  digitalWrite(CYD_LED_BLUE, value ? LOW : HIGH);
+  Serial.println(is_led_active);
+}
+
 
 
 
@@ -102,8 +138,8 @@ void touchscreen_read(lv_indev_t * indev, lv_indev_data_t * data) {
     // Set the coordinates
     data->point.x = x;
     data->point.y = y;
-    String touch_data = "X = " + String(x) + "  Y = " + String(y) + "  Z = " + String(z);
-    Serial.println(touch_data);
+    // String touch_data = "X = " + String(x) + "  Y = " + String(y) + "  Z = " + String(z);
+    // Serial.println(touch_data);
   }
   else {
     data->state = LV_INDEV_STATE_RELEASED;
@@ -158,6 +194,25 @@ void setup() {
   Serial.println(SW_NAME_REV);
   Serial.println(LVGL_Arduino);
 
+  pinMode(CYD_LED_RED, OUTPUT);
+  pinMode(CYD_LED_GREEN, OUTPUT);
+  pinMode(CYD_LED_BLUE, OUTPUT);
+
+  digitalWrite(CYD_LED_BLUE, HIGH);
+  digitalWrite(CYD_LED_GREEN, HIGH);
+  digitalWrite(CYD_LED_RED, HIGH);
+
+   
+  I2CBME.begin(I2C_SDA, I2C_SCL, 100000);
+  bool status;
+  // Passing a &Wire2 to set custom I2C ports
+  status = bme.begin(0x76, &I2CBME);
+  if (!status) {
+    Serial.println("Could not find a valid BME280 sensor, check wiring!");
+    while (1);
+  }
+  
+
 
 /*
   tft.init();
@@ -177,6 +232,9 @@ void setup() {
 
 
 
+
+
+
 void loop() {
 
   static long last_ms = 0;
@@ -185,6 +243,9 @@ void loop() {
 
   // your task here on in callbacks
   // ...
+
+  bme_temp = bme.readTemperature();
+  // Serial.println(bme_temp);
 
   // enable this if use EEZ Studio Flows 
   ui_tick();

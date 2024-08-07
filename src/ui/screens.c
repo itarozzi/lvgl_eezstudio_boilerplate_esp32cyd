@@ -82,6 +82,20 @@ static void event_handler_cb_page2_obj6(lv_event_t *e) {
     void *flowState = e->user_data;
 }
 
+static void event_handler_cb_page2_obj7(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = e->user_data;
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        lv_obj_t *ta = lv_event_get_target(e);
+        if (tick_value_change_obj != ta) {
+            int32_t value = lv_arc_get_value(ta);
+            if (tick_value_change_obj != ta) {
+                assignIntegerProperty(flowState, 8, 3, value, "Failed to assign Value in Arc widget");
+            }
+        }
+    }
+}
+
 void create_screen_main() {
     void *flowState = getFlowState(0, 0);
     lv_obj_t *obj = lv_obj_create(0);
@@ -211,9 +225,9 @@ void create_screen_page2() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 10, 18);
+            lv_obj_set_pos(obj, 47, 143);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "page2 ");
+            lv_label_set_text(obj, "counter");
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
@@ -236,7 +250,7 @@ void create_screen_page2() {
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
             objects.obj3 = obj;
-            lv_obj_set_pos(obj, 110, 71);
+            lv_obj_set_pos(obj, 26, 71);
             lv_obj_set_size(obj, 100, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "");
             lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -245,7 +259,7 @@ void create_screen_page2() {
         {
             lv_obj_t *obj = lv_arc_create(parent_obj);
             objects.obj4 = obj;
-            lv_obj_set_pos(obj, 99, 20);
+            lv_obj_set_pos(obj, 8, 20);
             lv_obj_set_size(obj, 136, 123);
             lv_arc_set_range(obj, 0, 255);
             lv_arc_set_bg_end_angle(obj, 60);
@@ -254,18 +268,44 @@ void create_screen_page2() {
         {
             lv_obj_t *obj = lv_switch_create(parent_obj);
             objects.obj5 = obj;
-            lv_obj_set_pos(obj, 135, 189);
+            lv_obj_set_pos(obj, 135, 200);
             lv_obj_set_size(obj, 50, 25);
             lv_obj_add_event_cb(obj, event_handler_cb_page2_obj5, LV_EVENT_ALL, flowState);
         }
         {
             lv_obj_t *obj = lv_led_create(parent_obj);
             objects.obj6 = obj;
-            lv_obj_set_pos(obj, 144, 151);
+            lv_obj_set_pos(obj, 144, 164);
             lv_obj_set_size(obj, 32, 32);
             lv_led_set_color(obj, lv_color_hex(4280171468));
             lv_obj_add_event_cb(obj, event_handler_cb_page2_obj6, LV_EVENT_ALL, flowState);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+        }
+        {
+            lv_obj_t *obj = lv_arc_create(parent_obj);
+            objects.obj7 = obj;
+            lv_obj_set_pos(obj, 176, 20);
+            lv_obj_set_size(obj, 136, 123);
+            lv_arc_set_range(obj, 0, 50);
+            lv_arc_set_bg_end_angle(obj, 60);
+            lv_obj_add_event_cb(obj, event_handler_cb_page2_obj7, LV_EVENT_ALL, flowState);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE|LV_OBJ_FLAG_CLICK_FOCUSABLE|LV_OBJ_FLAG_SCROLL_WITH_ARROW);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_KNOB | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 197, 143);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "temperature");
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            objects.obj8 = obj;
+            lv_obj_set_pos(obj, 187, 72);
+            lv_obj_set_size(obj, 100, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "");
+            lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
     }
 }
@@ -318,6 +358,24 @@ void tick_screen_page2() {
         if (new_val != cur_val) {
             tick_value_change_obj = objects.obj6;
             lv_led_set_brightness(objects.obj6, new_val);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        int32_t new_val = evalIntegerProperty(flowState, 8, 3, "Failed to evaluate Value in Arc widget");
+        int32_t cur_val = lv_arc_get_value(objects.obj7);
+        if (new_val != cur_val) {
+            tick_value_change_obj = objects.obj7;
+            lv_arc_set_value(objects.obj7, new_val);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        const char *new_val = evalTextProperty(flowState, 10, 3, "Failed to evaluate Text in Label widget");
+        const char *cur_val = lv_label_get_text(objects.obj8);
+        if (strcmp(new_val, cur_val) != 0) {
+            tick_value_change_obj = objects.obj8;
+            lv_label_set_text(objects.obj8, new_val);
             tick_value_change_obj = NULL;
         }
     }
