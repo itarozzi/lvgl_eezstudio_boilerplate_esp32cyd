@@ -148,7 +148,7 @@ void lv_init_esp32(void) {
   disp = lv_tft_espi_create(SCREEN_WIDTH, SCREEN_HEIGHT, draw_buf, sizeof(draw_buf));
   
   // set rotation mode
-  tft.setRotation(3);  // 0 or 1 for  portrait / 1 or 3 for landscape
+  tft.setRotation(3);  // 0 or 2 for  portrait / 1 or 3 for landscape
 
 
   // Initialize an LVGL input device object (Touchscreen)
@@ -187,9 +187,6 @@ void setup() {
   
 
 
-/*
-  tft.init();
-  tft.setRotation(2);*/
 
   // // Start LVGL
   lv_init();
