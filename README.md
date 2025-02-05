@@ -25,8 +25,7 @@ But you can easily adapt to other esp32 board and display/touch changing PIN def
 
 LVGL C files are generate by EEZ-Studio under `src/ui/` directory.
 
-T.b.c.
-
+You can use (optionally) EEZ-Flow logic engine in your EEZ-Studio project. In this case remember to uncomment the call to ui_tick() in your loop code.
 
 ## ESP32 Manual programming
 
@@ -37,9 +36,9 @@ esptool.py --chip esp32 --port "/dev/ttyUSB0" --baud 460800 --before default_res
 
 ## TODO: 
 
-- add tips on how to use eez-studio with LVGL
+- ~~add tips on how to use eez-studio with LVGL~~
 - ~~looking for a way to use `lv_conf.h` and `User_Setup.h` without copy them in `.pio` subdir~~
 - adapt the boilerplate for Raspberry Pi Pico (RP2040) too
 - adapt the boilerplate for using LVGL PC simulation (?)
-- study EEZ-Studio Flows 
+- ~~study EEZ-Studio Flows ~~
 

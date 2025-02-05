@@ -33,7 +33,9 @@
 #include <lvgl.h>
 #include "ui/ui.h"
 #include "ui/vars.h"
-//#include "ui/actions.h"
+//#include "ui/screens.h"
+//#include "ui/styles.h"
+#include "ui/actions.h"
 //#include "ui/images.h"
 
 //************* TFT display and includes  *************
