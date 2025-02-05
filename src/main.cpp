@@ -188,10 +188,10 @@ void setup() {
 
 
 
-  // // Start LVGL
+  // Start LVGL
   lv_init();
 
-  // // Init TFT and Touch for esp32
+  // Init TFT and Touch for esp32
   lv_init_esp32();
 
 
@@ -214,6 +214,9 @@ void loop() {
 
   lv_task_handler();  // let the GUI do its work
   lv_tick_inc(now_ms - last_ms);     // tell LVGL how much time has passed
+
+
+//  ui_tick(); // uncomment if using eez-flow
 
   last_ms = now_ms;
   delay(5);           // let this time pass
