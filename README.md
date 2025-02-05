@@ -8,6 +8,8 @@ This boilerplate project is based on a very cheap ESP32-CYD Hardware (ESP32 with
 
 But you can easily adapt to other esp32 board and display/touch changing PIN definition, `lv_conf.h and` and  `User_Setup.h` files.
 
+> In order to avoid modification of `User_Setup.h` file inside the TFT_eSPI library (that can be overwritten updating the lib) is now possible to assign the same options using build_flag in the platformio.ini.
+
 
 [EEZ-Studio](https://github.com/eez-open/studio) is used here to create LVGL interfaces using a great visual tool.
 
